@@ -3,6 +3,7 @@
 namespace SWApi\Commands;
 
 use SWApi\DataObject\Planet as DataObjectPlanet;
+use SWApi\Models\Planet as ModelsPlanet;
 use SWApi\Services\SWApi;
 
 final class Planet extends BaseCommands {
@@ -19,9 +20,15 @@ final class Planet extends BaseCommands {
         dump("Planetas encontrados (". sizeof($out) . "), buscando detalhes de cada um...");
 
         foreach($out as $k => $planet) {
-            $out[$k] = $this->getFromId(
-                $planet->uid
-            );
+            $fromDB = (new ModelsPlanet)->getFromId((int) $planet->uid);
+
+            if(!empty($fromDB)) {
+                $out[$k] = $fromDB;
+            } else {
+                $out[$k] = $this->getFromId(
+                    $planet->uid
+                );
+            }
         }
 
         return $out;
@@ -34,6 +41,6 @@ final class Planet extends BaseCommands {
 
         unset($data->result->properties->url);
 
-        return (new DataObjectPlanet)->fromJson(json_encode($data->result->properties));
+        return (new DataObjectPlanet)->fromObject($data->result->properties);
     }
 }

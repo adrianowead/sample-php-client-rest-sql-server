@@ -3,6 +3,7 @@
 namespace SWApi\Commands;
 
 use SWApi\DataObject\People as DataObjectPeople;
+use SWApi\Models\People as ModelsPeople;
 use SWApi\Services\SWApi;
 
 final class People extends BaseCommands {
@@ -19,9 +20,15 @@ final class People extends BaseCommands {
         dump("Pessoas encontradas (". sizeof($out) . "), buscando detalhes de cada um...");
 
         foreach($out as $k => $people) {
-            $out[$k] = $this->getFromId(
-                $people->uid
-            );
+            $fromDB = (new ModelsPeople)->getFromId((int) $people->uid);
+
+            if(!empty($fromDB)) {
+                $out[$k] = $fromDB;
+            } else {
+                $out[$k] = $this->getFromId(
+                    $people->uid
+                );
+            }
         }
 
         return $out;
@@ -35,6 +42,6 @@ final class People extends BaseCommands {
 
         unset($data->result->properties->url);
 
-        return (new DataObjectPeople)->fromJson(json_encode($data->result->properties));
+        return (new DataObjectPeople)->fromObject($data->result->properties);
     }
 }
