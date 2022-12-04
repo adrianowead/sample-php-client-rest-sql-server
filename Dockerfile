@@ -26,7 +26,8 @@ RUN apt-get update && apt-get install -y \
     php8.2-sybase \
     php8.2-mbstring \
     php8.2-xml \
-    php8.2-xsl
+    php8.2-xsl \
+    php8.2-zip
 
 # instalar composer a partir do outro container
 COPY --from=composer:2.3.10 /usr/bin/composer /usr/bin/composer
