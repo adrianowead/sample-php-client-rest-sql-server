@@ -1,0 +1,14 @@
+version: '3.4'
+services:
+  php-star-wars:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: star-wars
+    ports:
+      - target: 80
+        published: 8080
+        protocol: tcp
+        mode: host
+    volumes:
+      - ./src:/work
