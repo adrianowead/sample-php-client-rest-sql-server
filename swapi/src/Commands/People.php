@@ -12,6 +12,21 @@ final class People extends BaseCommands {
         $this->endpoint = $this->signature = 'people';
     }
 
+    public function getAll(): array
+    {
+        $out = parent::getAll();
+
+        dump("Pessoas encontradas (". sizeof($out) . "), buscando detalhes de cada um...");
+
+        foreach($out as $k => $people) {
+            $out[$k] = $this->getFromId(
+                $people->uid
+            );
+        }
+
+        return $out;
+    }
+
     public function getFromId(int $id): DataObjectPeople
     {
         $data = SWApi::call("/{$this->endpoint}/{$id}");

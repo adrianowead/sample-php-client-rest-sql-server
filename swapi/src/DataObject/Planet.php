@@ -4,18 +4,18 @@ namespace SWApi\DataObject;
 
 final class Planet extends BaseDataObject
 {
-    private int $id;
-    private string $name;
-    private float $diameter;
-    private float $rotation_period;
-    private float $orbital_period;
-    private string $gravity;
-    private int $population;
-    private string $climate;
-    private string $terrain;
-    private string $surface_water;
-    private \DateTime $created;
-    private \DateTime $edited;
+    protected int $id;
+    protected string $name;
+    protected float $diameter;
+    protected float $rotation_period;
+    protected float $orbital_period;
+    protected string $gravity;
+    protected int $population;
+    protected string $climate;
+    protected string $terrain;
+    protected string $surface_water;
+    protected \DateTime $created;
+    protected \DateTime $edited;
 
     public function setId(int | string $id): void
     {
@@ -47,7 +47,7 @@ final class Planet extends BaseDataObject
         $this->gravity = trim($gravity);
     }
 
-    public function setPopulation(int | string $population): void
+    public function setPopulation(null | int | string $population): void
     {
         $this->population = (int) $population;
     }

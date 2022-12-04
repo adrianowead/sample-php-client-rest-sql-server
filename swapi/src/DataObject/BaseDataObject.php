@@ -15,6 +15,15 @@ abstract class BaseDataObject
         }
     }
 
+    public function __get($prop)
+    {
+        if (!property_exists($this, $prop)) {
+            dump("A propriedade {$prop} não existe");
+        } else {
+            return $this->$prop;
+        }
+    }
+
     public function fromJson(string $json): BaseDataObject
     {
         $json = str_replace("\n", "", $json);
@@ -29,22 +38,32 @@ abstract class BaseDataObject
         return $this;
     }
 
-    public function __toString()
+    public function fromObject(\stdClass $object): BaseDataObject
+    {
+        foreach ($object as $prop => $value) {
+            $this->__set($prop, $value);
+        }
+
+        return $this;
+    }
+
+    public function __toString(): string
     {
         $array = $this->toArray();
 
         return json_encode($array);
     }
 
-    public function toArray()
+    public function toArray(): array
     {
-        $array = [];
+        $data = get_object_vars($this);
 
-        foreach (get_class_vars(__CLASS__) as $prop => $value) {
-            if (!empty($this->$prop)) {
-                $array[$prop] = $this->$prop;
+        foreach($data as $k => $v) {
+            if($v instanceof \DateTime) {
+                $data[$k] = $v->format('Y-m-d H:i:s');
             }
         }
-        return $array;
+
+        return $data;
     }
 }

@@ -4,21 +4,22 @@ namespace SWApi\DataObject;
 
 use SWApi\Commands\Planet;
 use SWApi\DataObject\Planet as DataObjectPlanet;
+use SWApi\Models\Planet as ModelsPlanet;
 
 final class People extends BaseDataObject
 {
-    private string $id;
-    private string $name;
-    private float $height;
-    private float $mass;
-    private string $hair_color;
-    private string $skin_color;
-    private string $eye_color;
-    private int $birth_year;
-    private string $gender;
-    private \DateTime $created;
-    private \DateTime $edited;
-    private DataObjectPlanet $homeworld;
+    protected string $id;
+    protected string $name;
+    protected float $height;
+    protected float $mass;
+    protected string $hair_color;
+    protected string $skin_color;
+    protected string $eye_color;
+    protected int $birth_year;
+    protected string $gender;
+    protected \DateTime $created;
+    protected \DateTime $edited;
+    protected DataObjectPlanet $homeworld;
 
     public function setId(int | string $id): void
     {
@@ -67,6 +68,13 @@ final class People extends BaseDataObject
 
     public function setHomeworld(int | string $homeworldId): void
     {
+        $fromDB = (new ModelsPlanet)->getFromId((int) $homeworldId);
+
+        if(!empty($fromDB)) {
+            $this->homeworld = $fromDB;
+            return ;
+        }
+    
         $this->homeworld = (new Planet)->getFromId((int) $homeworldId);
     }
 
