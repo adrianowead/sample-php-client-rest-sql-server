@@ -21,5 +21,8 @@
         "psr-4": {
             "SWApi\\": "src/"
         }
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^6.2"
     }
 }
