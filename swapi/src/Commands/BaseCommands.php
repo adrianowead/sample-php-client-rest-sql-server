@@ -2,6 +2,9 @@
 
 namespace SWApi\Commands;
 
+use SWApi\DataObject\BaseDataObject;
+use SWApi\Services\SWApi;
+
 abstract class BaseCommands {
     protected string $signature;
     protected string $enpoint;
@@ -27,6 +30,27 @@ abstract class BaseCommands {
         return $sig;
     }
 
-    abstract public function getAll(): array | null;
-    abstract public function getFromId(int $id): array;
+    public function getAll(): array
+    {
+        $out = [];
+        $currentPage = 1;
+
+        do {
+            dump("Buscando /{$this->endpoint} página {$currentPage}");
+
+            $data = SWApi::call("/{$this->endpoint}", [
+                'page' => $currentPage,
+                'limit' => 10
+            ]);
+
+            $out = array_merge($out, $data->results);
+
+            $currentPage++;
+        }
+        while(!empty($data->next));
+
+        return $out;
+    }
+
+    abstract public function getFromId(int $id): BaseDataObject;
 }
