@@ -20,43 +20,6 @@
         },
         "psr-4": {
             "SWApi\\": "src/"
-        },
-        "files": [
-            "src/cli.php"
-        ]
-    },
-    "require-dev": {
-        "symfony/var-dumper": "^5.2",
-        "phpcompatibility/php-compatibility": "*",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
-        "phpunit/phpunit": "^9",
-        "squizlabs/php_codesniffer": "*",
-        "phan/phan": "^3.2"
-    },
-    "scripts": {
-        "post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/phpcompatibility/php-compatibility",
-        "post-update-cmd" : "\"vendor/bin/phpcs\" --config-set installed_paths vendor/phpcompatibility/php-compatibility",
-        "check-php74-compatibility": "vendor/bin/phpcs -p src --standard=PHPCompatibility --runtime-set testVersion 7.4",
-        "psr12": "phpcs --standard=PSR12 --colors src/",
-        "psr12-fix-src": "phpcbf --standard=PSR12 --colors src/",
-        "psr12-fix-tests": "phpcbf --standard=PSR12 --colors tests/",
-        "phan": "phan --allow-polyfill-parser",
-        "test": "phpunit --colors=always",
-        "psr12-fix": [
-            "@psr12-fix-src",
-            "@psr12-fix-tests"
-        ],
-        "check": [
-            "@phan",
-            "@psr12-fix",
-            "@psr12",
-            "@test"
-        ]
-    },
-    "scripts-descriptions": {
-        "psr12": "Valida se o projeto está seguindo os padrões da PSR-12",
-        "psr12-fix": "Executa pequenas correções automáticas para padronização na PSR-12",
-        "phan": "Executa uma validação no código, em busca de erros de implementação",
-        "check": "Executa as verificações do código em sequência (Phan, PSR12-FIX, PSR12)"
+        }
     }
 }
