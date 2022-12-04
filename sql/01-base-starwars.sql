@@ -1,12 +1,3 @@
-USE [master]
-GO
-
-/****** Object:  Table [dbo].[sw_planet]    Script Date: 04/12/2022 11:15:33 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 CREATE TABLE [dbo].[sw_planet](
 	[id] [int] NOT NULL,
@@ -19,15 +10,7 @@ CREATE TABLE [dbo].[sw_planet](
 GO
 
 
-USE [master]
-GO
 
-/****** Object:  Table [dbo].[sw_people]    Script Date: 04/12/2022 11:16:13 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 CREATE TABLE [dbo].[sw_people](
 	[id] [int] NOT NULL,
