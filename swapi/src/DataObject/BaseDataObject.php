@@ -6,10 +6,10 @@ abstract class BaseDataObject
 {
     public function __set($prop, $value)
     {
-        if (!property_exists($this, $prop)) {
+        if (!property_exists(object_or_class: $this, property: $prop)) {
             dump("A propriedade {$prop} não existe");
         } else {
-            $func = "set" . ucfirst(strtolower($prop));
+            $func = "set" . ucfirst(string: strtolower(string: $prop));
 
             $this->$func($value);
         }
@@ -17,7 +17,7 @@ abstract class BaseDataObject
 
     public function __get($prop)
     {
-        if (!property_exists($this, $prop)) {
+        if (!property_exists(object_or_class: $this, property: $prop)) {
             dump("A propriedade {$prop} não existe");
         } else {
             return $this->$prop;
@@ -26,13 +26,13 @@ abstract class BaseDataObject
 
     public function fromJson(string $json): BaseDataObject
     {
-        $json = str_replace("\n", "", $json);
-        $json = stripslashes($json);
+        $json = str_replace(search: "\n", replace: "", subject: $json);
+        $json = stripslashes(string: $json);
 
-        $obj = @json_decode($json, true);
+        $obj = @json_decode(json: $json, associative: true);
 
         foreach ($obj as $prop => $value) {
-            $this->__set($prop, $value);
+            $this->__set(prop: $prop, value: $value);
         }
 
         return $this;
@@ -41,7 +41,7 @@ abstract class BaseDataObject
     public function fromObject(\stdClass $object): BaseDataObject
     {
         foreach ($object as $prop => $value) {
-            $this->__set($prop, $value);
+            $this->__set(prop: $prop, value: $value);
         }
 
         return $this;
@@ -51,16 +51,16 @@ abstract class BaseDataObject
     {
         $array = $this->toArray();
 
-        return json_encode($array);
+        return json_encode(value: $array);
     }
 
     public function toArray(): array
     {
-        $data = get_object_vars($this);
+        $data = get_object_vars(object: $this);
 
         foreach($data as $k => $v) {
             if($v instanceof \DateTime) {
-                $data[$k] = $v->format('Y-m-d H:i:s');
+                $data[$k] = $v->format(format: 'Y-m-d H:i:s');
             }
         }
 

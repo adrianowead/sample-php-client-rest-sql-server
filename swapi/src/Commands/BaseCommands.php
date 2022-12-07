@@ -11,23 +11,13 @@ abstract class BaseCommands {
 
     public function __get(string $prop): mixed
     {
-        $func  = "get" . ucfirst($prop);
+        $func  = "get" . ucfirst(string: $prop);
 
-        if(method_exists($this, $func)) {
+        if(method_exists(object_or_class: $this, method: $func)) {
             return $this->$func();
         }
 
-        throw new \Exception("A função '{$func}' não existe.");
-    }
-
-    private function getSignature(): string
-    {
-        $sig = "swapi:{$this->signature}";
-
-        if($sig == 'swapi:')
-            throw new \Exception("A assinatura do comando é obrigatória");
-
-        return $sig;
+        throw new \Exception(message: "A função '{$func}' não existe.", code: 1);
     }
 
     public function getAll(): array
@@ -38,7 +28,8 @@ abstract class BaseCommands {
         do {
             dump("Buscando /{$this->endpoint} página {$currentPage}");
 
-            $data = SWApi::call("/{$this->endpoint}", [
+            $data = SWApi::call(path: "/{$this->endpoint}",
+            params: [
                 'page' => $currentPage,
                 'limit' => 10
             ]);

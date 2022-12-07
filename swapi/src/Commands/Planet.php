@@ -10,7 +10,7 @@ final class Planet extends BaseCommands {
 
     public function __construct()
     {
-        $this->endpoint = $this->signature = 'planets';
+        $this->endpoint = 'planets';
     }
 
     public function getAll(): array
@@ -20,13 +20,13 @@ final class Planet extends BaseCommands {
         dump("Planetas encontrados (". sizeof($out) . "), buscando detalhes de cada um...");
 
         foreach($out as $k => $planet) {
-            $fromDB = (new ModelsPlanet)->getFromId((int) $planet->uid);
+            $fromDB = (new ModelsPlanet)->getFromId(id: (int) $planet->uid);
 
             if(!empty($fromDB)) {
                 $out[$k] = $fromDB;
             } else {
                 $out[$k] = $this->getFromId(
-                    $planet->uid
+                    id: $planet->uid
                 );
             }
         }
@@ -36,11 +36,11 @@ final class Planet extends BaseCommands {
 
     public function getFromId(int $id): DataObjectPlanet
     {
-        $data = SWApi::call("/{$this->endpoint}/{$id}");
+        $data = SWApi::call(path: "/{$this->endpoint}/{$id}");
         $data->result->properties->id = $id;
 
         unset($data->result->properties->url);
 
-        return (new DataObjectPlanet)->fromObject($data->result->properties);
+        return (new DataObjectPlanet)->fromObject(object: $data->result->properties);
     }
 }

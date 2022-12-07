@@ -3,6 +3,8 @@
 namespace SWApi\Models;
 
 use SWApi\DataObject\BaseDataObject;
+use SWApi\DataObject\People;
+use SWApi\DataObject\Planet;
 
 abstract class BaseModels
 {
@@ -10,31 +12,31 @@ abstract class BaseModels
 
     public function __construct()
     {
-        $host = getenv('DB_HOST');
-        $port = getenv('DB_PORT');
-        $user = getenv('DB_USER');
-        $pass = getenv('DB_PASS');
-        $base = getenv('DB_BASE');
+        $host = getenv(name: 'DB_HOST');
+        $port = getenv(name: 'DB_PORT');
+        $user = getenv(name: 'DB_USER');
+        $pass = getenv(name: 'DB_PASS');
+        $base = getenv(name: 'DB_BASE');
 
         $this->conn = new \PDO(
-            "dblib:host={$host}:{$port};dbname={$base}",
-            $user,
-            $pass
+            dsn: "dblib:host={$host}:{$port};dbname={$base}",
+            username: $user,
+            password: $pass
         );
     }
 
     public function count(): int
     {
         $sql = "SELECT COUNT(*) AS TOTAL FROM {$this->table}";
-        $res = $this->conn->query($sql);
+        $res = $this->conn->query(statement: $sql);
 
         return $res->fetchObject()->TOTAL;
     }
 
     public function alreadyExistsId(int $id): bool
     {
-        $sth = $this->conn->prepare("SELECT COUNT(*) AS TOTAL FROM {$this->table} WHERE id = :id");
-        $sth->bindParam(':id', $id);
+        $sth = $this->conn->prepare(query: "SELECT COUNT(*) AS TOTAL FROM {$this->table} WHERE id = :id");
+        $sth->bindParam(param: ':id', var: $id);
         $sth->execute();
 
         return $sth->fetchObject()->TOTAL > 0;
@@ -42,11 +44,11 @@ abstract class BaseModels
 
     public function saveIfNotExists(BaseDataObject $object): void
     {
-        if(!$this->alreadyExistsId($object->id)) {
+        if(!$this->alreadyExistsId(id: $object->id)) {
             $list = $object->toArray();
 
             $sth = $this->conn->prepare(
-                $this->buildInsertQuery($object)
+                query: $this->buildInsertQuery(object: $object)
             );
 
             foreach($list as $k => $v) {
@@ -54,7 +56,7 @@ abstract class BaseModels
                     $v = $v->id;
                 }
 
-                $sth->bindValue(":{$k}", $v);
+                $sth->bindValue(param: ":{$k}", value: $v);
             }
 
             $sth->execute();
@@ -65,17 +67,23 @@ abstract class BaseModels
     {
         $list = $object->toArray();
 
-        $fields = array_keys($list);
+        $fields = array_keys(array: $list);
 
-        return "INSERT INTO {$this->table} (" . implode(',', $fields) . ") VALUES (:" . implode(',:', $fields) . ")";
+        return "INSERT INTO {$this->table} (" . implode(separator: ',', array: $fields) . ") VALUES (:" . implode(separator: ',:', array: $fields) . ")";
     }
 
-    public function getFromId(int $id): \stdClass | BaseDataObject | null | bool
+    public function getFromId(int $id): ?BaseDataObject
     {
-        $sth = $this->conn->prepare("SELECT * FROM {$this->table} WHERE id = :id");
-        $sth->bindParam(':id', $id);
+        $sth = $this->conn->prepare(query: "SELECT * FROM {$this->table} WHERE id = :id");
+        $sth->bindParam(param: ':id', var: $id);
         $sth->execute();
 
-        return $sth->fetchObject();
+        $type = explode('\\', $this::class);
+        $type = strtolower(end($type));
+
+        return match($type) {
+            'planet' => (new Planet)->fromObject($sth->fetchObject()),
+            'people' => (new People)->fromObject($sth->fetchObject()),
+        };
     }
 }

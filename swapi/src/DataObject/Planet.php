@@ -6,16 +6,16 @@ final class Planet extends BaseDataObject
 {
     protected int $id;
     protected string $name;
-    protected float $diameter;
-    protected float $rotation_period;
-    protected float $orbital_period;
-    protected string $gravity;
-    protected int $population;
-    protected string $climate;
-    protected string $terrain;
-    protected string $surface_water;
-    protected \DateTime $created;
-    protected \DateTime $edited;
+    protected ?float $diameter;
+    protected ?float $rotation_period;
+    protected ?float $orbital_period;
+    protected ?string $gravity;
+    protected ?int $population;
+    protected ?string $climate;
+    protected ?string $terrain;
+    protected ?string $surface_water;
+    protected ?\DateTime $created;
+    protected ?\DateTime $edited;
 
     public function setId(int | string $id): void
     {
@@ -27,53 +27,53 @@ final class Planet extends BaseDataObject
         $this->name = trim($name);
     }
 
-    public function setDiameter(int | float | string $diameter): void
+    public function setDiameter(null | int | float | string $diameter): void
     {
-        $this->diameter = (float) $diameter;
+        $this->diameter = $diameter ?? (float) $diameter;
     }
 
-    public function setRotation_period(int | float | string $rotation_period): void
+    public function setRotation_period(null | int | float | string $rotation_period): void
     {
-        $this->rotation_period = (float) $rotation_period;
+        $this->rotation_period = $rotation_period ?? (float) $rotation_period;
     }
 
-    public function setOrbital_period(int | float | string $orbital_period): void
+    public function setOrbital_period(null | int | float | string $orbital_period): void
     {
-        $this->orbital_period = (float) $orbital_period;
+        $this->orbital_period = $orbital_period ?? (float) $orbital_period;
     }
 
-    public function setGravity(string $gravity): void
+    public function setGravity(null | string $gravity): void
     {
-        $this->gravity = trim($gravity);
+        $this->gravity = $gravity ?? trim(string: $gravity);
     }
 
     public function setPopulation(null | int | string $population): void
     {
-        $this->population = (int) $population;
+        $this->population = $population ?? (int) $population;
     }
 
-    public function setClimate(string $climate): void
+    public function setClimate(null | string $climate): void
     {
-        $this->climate = trim($climate);
+        $this->climate = $climate ?? trim(string: $climate);
     }
 
-    public function setTerrain(string $terrain): void
+    public function setTerrain(null | string $terrain): void
     {
-        $this->terrain = trim($terrain);
+        $this->terrain = $terrain ?? trim(string: $terrain);
     }
 
-    public function setSurface_water(string $surface_water): void
+    public function setSurface_water(null | string $surface_water): void
     {
-        $this->surface_water = trim($surface_water);
+        $this->surface_water = $surface_water ?? trim(string: $surface_water);
     }
 
-    public function setCreated(string $created): void
+    public function setCreated(null | string $created): void
     {
-        $this->created = new \DateTime($created);
+        $this->created = $created ?? new \DateTime(datetime: $created);
     }
 
-    public function setEdited(string $edited): void
+    public function setEdited(null | string $edited): void
     {
-        $this->edited = new \DateTime($edited);
+        $this->edited = $edited ?? new \DateTime(datetime: $edited);
     }
 }

@@ -2,6 +2,7 @@
 
 use SWApi\Commands\People;
 use SWApi\Commands\Planet;
+use SWApi\DataObject\Planet as DataObjectPlanet;
 use SWApi\Models\People as ModelsPeople;
 use SWApi\Models\Planet as ModelsPlanet;
 
@@ -18,10 +19,9 @@ $planet = new Planet;
 $peopleModel = new ModelsPeople;
 $planetModel = new ModelsPlanet;
 
-
 // buscar uma pessoa específica
 dump("Buscando uma pessoa espefífica");
-$alguem = $people->getFromId(2);
+$alguem = $people->getFromId(id: 2);
 dump($alguem);
 
 echo PHP_EOL;
@@ -29,7 +29,7 @@ echo PHP_EOL;
 
 // buscar um planeta
 dump("Buscando um planeta específico");
-$lugar = $planet->getFromId(2);
+$lugar = $planet->getFromId(id: 2);
 dump($lugar);
 
 echo PHP_EOL;
@@ -51,12 +51,12 @@ echo PHP_EOL;
 
 // salvar o planeta retornado
 dump("Salvando o planeta pesquisado, caso ainda não exista");
-$planetModel->saveIfNotExists($lugar);
+$planetModel->saveIfNotExists(object: $lugar);
 
 echo PHP_EOL;
 
 dump("Salvando a pessoa pesquisada, caso ainda não exista");
-$peopleModel->saveIfNotExists($alguem);
+$peopleModel->saveIfNotExists(object: $alguem);
 
 echo PHP_EOL;
 echo PHP_EOL;
@@ -79,7 +79,7 @@ echo PHP_EOL;
 dump("Salvando todos os planetas da API");
 
 foreach($todosPlanetas as $p) {
-    $planetModel->saveIfNotExists($p);
+    $planetModel->saveIfNotExists(object: $p);
     dump("Salvo planeta {$p->name} ID: {$p->id}");
 }
 
@@ -89,7 +89,7 @@ echo PHP_EOL;
 dump("Salvando todas as pessoas da API");
 
 foreach($todasPessoas as $p) {
-    $peopleModel->saveIfNotExists($p);
+    $peopleModel->saveIfNotExists(object: $p);
     dump("Salvo pessoa {$p->name} ID: {$p->id}");
 }
 
