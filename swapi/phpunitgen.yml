@@ -1,0 +1,24 @@
+overwriteFiles: false
+backupFiles: true
+excludedFiles: ['\/src\/index\.php']
+includedFiles:
+  - '\.php$'
+generateOnMake: true
+automaticGeneration: true
+implementations:
+  PhpUnitGen\Core\Contracts\Generators\TestGenerator: PhpUnitGen\Core\Generators\Tests\DelegateTestGenerator
+baseNamespace: SWApi
+baseTestNamespace: Tests
+testCase: PHPUnit\Framework\TestCase
+testClassFinal: true
+testClassStrictTypes: false
+testClassTypedProperties: true
+excludedMethods:
+  - __construct
+  - __destruct
+mergedPhpDoc:
+  - author
+  - copyright
+  - license
+  - version
+phpDoc: []
