@@ -4,6 +4,8 @@ namespace Tests\Unit\DataObject;
 
 use PHPUnit\Framework\TestCase;
 use SWApi\DataObject\BaseDataObject;
+use SWApi\DataObject\People;
+use SWApi\Exceptions\InvalidPropertyException;
 
 /**
  * Class BaseDataObjectTest.
@@ -39,8 +41,21 @@ final class BaseDataObjectTest extends TestCase
 
     public function test__set(): void
     {
-        /** @todo This test is incomplete. */
-        $this->markTestIncomplete();
+        $people = new People;
+        $people->id = 1;
+        $people->name = 'test';
+
+        $this->assertEquals(1, $people->id);
+    }
+
+    public function test__setNotExists(): void
+    {
+        $this->expectException(InvalidPropertyException::class);
+
+        $people = new People;
+        $people->id = 1;
+        $people->name = 'test';
+        $people->notExistsTest = null;
     }
 
     public function test__get(): void

@@ -6,7 +6,6 @@ use Mockery;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use SWApi\DataObject\Planet;
-use null;
 
 /**
  * Class PlanetTest.
@@ -60,7 +59,7 @@ final class PlanetTest extends TestCase
 
     public function testSetDiameter(): void
     {
-        $expected = Mockery::mock(null::class);
+        $expected = null;
         $property = (new ReflectionClass(Planet::class))
             ->getProperty('diameter');
         $property->setAccessible(true);
@@ -70,7 +69,7 @@ final class PlanetTest extends TestCase
 
     public function testSetRotationPeriod(): void
     {
-        $expected = Mockery::mock(null::class);
+        $expected = null;
         $property = (new ReflectionClass(Planet::class))
             ->getProperty('rotationPeriod');
         $property->setAccessible(true);
@@ -80,7 +79,7 @@ final class PlanetTest extends TestCase
 
     public function testSetOrbitalPeriod(): void
     {
-        $expected = Mockery::mock(null::class);
+        $expected = null;
         $property = (new ReflectionClass(Planet::class))
             ->getProperty('orbitalPeriod');
         $property->setAccessible(true);
@@ -90,7 +89,7 @@ final class PlanetTest extends TestCase
 
     public function testSetGravity(): void
     {
-        $expected = Mockery::mock(null::class);
+        $expected = null;
         $property = (new ReflectionClass(Planet::class))
             ->getProperty('gravity');
         $property->setAccessible(true);
@@ -100,7 +99,7 @@ final class PlanetTest extends TestCase
 
     public function testSetPopulation(): void
     {
-        $expected = Mockery::mock(null::class);
+        $expected = null;
         $property = (new ReflectionClass(Planet::class))
             ->getProperty('population');
         $property->setAccessible(true);
@@ -110,7 +109,7 @@ final class PlanetTest extends TestCase
 
     public function testSetClimate(): void
     {
-        $expected = Mockery::mock(null::class);
+        $expected = null;
         $property = (new ReflectionClass(Planet::class))
             ->getProperty('climate');
         $property->setAccessible(true);
@@ -120,7 +119,7 @@ final class PlanetTest extends TestCase
 
     public function testSetTerrain(): void
     {
-        $expected = Mockery::mock(null::class);
+        $expected = null;
         $property = (new ReflectionClass(Planet::class))
             ->getProperty('terrain');
         $property->setAccessible(true);
@@ -130,7 +129,7 @@ final class PlanetTest extends TestCase
 
     public function testSetSurfaceWater(): void
     {
-        $expected = Mockery::mock(null::class);
+        $expected = null;
         $property = (new ReflectionClass(Planet::class))
             ->getProperty('surfaceWater');
         $property->setAccessible(true);
@@ -140,7 +139,7 @@ final class PlanetTest extends TestCase
 
     public function testSetCreated(): void
     {
-        $expected = Mockery::mock(null::class);
+        $expected = null;
         $property = (new ReflectionClass(Planet::class))
             ->getProperty('created');
         $property->setAccessible(true);
@@ -150,7 +149,7 @@ final class PlanetTest extends TestCase
 
     public function testSetEdited(): void
     {
-        $expected = Mockery::mock(null::class);
+        $expected = null;
         $property = (new ReflectionClass(Planet::class))
             ->getProperty('edited');
         $property->setAccessible(true);

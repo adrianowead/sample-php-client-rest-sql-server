@@ -2,11 +2,9 @@
 
 namespace Tests\Unit\DataObject;
 
-use Mockery;
-use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use SWApi\DataObject\People;
-use null;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class PeopleTest.
@@ -60,7 +58,7 @@ final class PeopleTest extends TestCase
 
     public function testSetHeight(): void
     {
-        $expected = Mockery::mock(null::class);
+        $expected = null;
         $property = (new ReflectionClass(People::class))
             ->getProperty('height');
         $property->setAccessible(true);
@@ -70,7 +68,7 @@ final class PeopleTest extends TestCase
 
     public function testSetMass(): void
     {
-        $expected = Mockery::mock(null::class);
+        $expected = 0.0;
         $property = (new ReflectionClass(People::class))
             ->getProperty('mass');
         $property->setAccessible(true);
@@ -80,7 +78,7 @@ final class PeopleTest extends TestCase
 
     public function testSetHairColor(): void
     {
-        $expected = Mockery::mock(null::class);
+        $expected = null;
         $property = (new ReflectionClass(People::class))
             ->getProperty('hairColor');
         $property->setAccessible(true);
@@ -90,7 +88,7 @@ final class PeopleTest extends TestCase
 
     public function testSetSkinColor(): void
     {
-        $expected = Mockery::mock(null::class);
+        $expected = null;
         $property = (new ReflectionClass(People::class))
             ->getProperty('skinColor');
         $property->setAccessible(true);
@@ -100,7 +98,7 @@ final class PeopleTest extends TestCase
 
     public function testSetEyeColor(): void
     {
-        $expected = Mockery::mock(null::class);
+        $expected = null;
         $property = (new ReflectionClass(People::class))
             ->getProperty('eyeColor');
         $property->setAccessible(true);
@@ -110,7 +108,7 @@ final class PeopleTest extends TestCase
 
     public function testSetBirthYear(): void
     {
-        $expected = Mockery::mock(null::class);
+        $expected = null;
         $property = (new ReflectionClass(People::class))
             ->getProperty('birthYear');
         $property->setAccessible(true);
@@ -120,7 +118,7 @@ final class PeopleTest extends TestCase
 
     public function testSetGender(): void
     {
-        $expected = Mockery::mock(null::class);
+        $expected = null;
         $property = (new ReflectionClass(People::class))
             ->getProperty('gender');
         $property->setAccessible(true);
@@ -128,33 +126,23 @@ final class PeopleTest extends TestCase
         $this->assertSame($expected, $property->getValue($this->people));
     }
 
-    public function testSetHomeworld(): void
-    {
-        $expected = 42;
-        $property = (new ReflectionClass(People::class))
-            ->getProperty('homeworld');
-        $property->setAccessible(true);
-        $this->people->setHomeworld($expected);
-        $this->assertSame($expected, $property->getValue($this->people));
-    }
-
     public function testSetCreated(): void
     {
-        $expected = Mockery::mock(null::class);
+        $expected = 'DateTime';
         $property = (new ReflectionClass(People::class))
             ->getProperty('created');
         $property->setAccessible(true);
-        $this->people->setCreated($expected);
-        $this->assertSame($expected, $property->getValue($this->people));
+        $this->people->setCreated('1979-10-12 08:10:00');
+        $this->assertInstanceOf($expected, $property->getValue($this->people));
     }
 
     public function testSetEdited(): void
     {
-        $expected = Mockery::mock(null::class);
+        $expected = 'DateTime';
         $property = (new ReflectionClass(People::class))
             ->getProperty('edited');
         $property->setAccessible(true);
-        $this->people->setEdited($expected);
-        $this->assertSame($expected, $property->getValue($this->people));
+        $this->people->setEdited('1979-10-12 08:10:00');
+        $this->assertInstanceOf($expected, $property->getValue($this->people));
     }
 }
