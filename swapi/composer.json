@@ -24,7 +24,8 @@
         "squizlabs/php_codesniffer": "^3.7",
         "phan/phan": "^5.4",
         "phpunit/phpunit": "^9.5",
-        "phpunitgen/console": "^4.1"
+        "phpunitgen/console": "^4.1",
+        "mockery/mockery": "^1.5"
     },
     "scripts": {
         "psr12": "phpcs --standard=PSR12 --colors src/",
