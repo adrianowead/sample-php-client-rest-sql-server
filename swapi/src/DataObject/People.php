@@ -8,17 +8,17 @@ use SWApi\Models\Planet as ModelsPlanet;
 
 final class People extends BaseDataObject
 {
-    protected string $id;
+    protected int $id;
     protected string $name;
-    protected ?float $height;
-    protected ?float $mass;
-    protected ?string $hairColor;
-    protected ?string $skinColor;
-    protected ?string $eyeColor;
-    protected ?int $birthYear;
-    protected ?string $gender;
-    protected ?\DateTime $created;
-    protected ?\DateTime $edited;
+    protected ?float $height = null;
+    protected ?float $mass = null;
+    protected ?string $hairColor = null;
+    protected ?string $skinColor = null;
+    protected ?string $eyeColor = null;
+    protected ?int $birthYear = null;
+    protected ?string $gender = null;
+    protected ?\DateTime $created = null;
+    protected ?\DateTime $edited = null;
     protected DataObjectPlanet $homeworld;
 
     public function setId(int | string $id): void
@@ -33,37 +33,37 @@ final class People extends BaseDataObject
 
     public function setHeight(null | int | float | string $height): void
     {
-        $this->height = $height ?? (float) $height;
+        if(!is_null($height)) $this->height = (float) $height;
     }
 
     public function setMass(null | int | float | string $mass): void
     {
-        $this->mass = $mass ?? (float) $mass;
+        if(!is_null($mass)) $this->mass = (float) $mass;
     }
 
     public function setHairColor(null | string $hairColor): void
     {
-        $this->hairColor = $hairColor ?? (float) $hairColor;
+        if(!is_null($hairColor)) $this->hairColor = (float) $hairColor;
     }
 
     public function setSkinColor(null | string $skinColor): void
     {
-        $this->skinColor = $skinColor ?? trim(string: $skinColor);
+        if (!is_null($skinColor)) $this->skinColor = trim(string: $skinColor);
     }
 
     public function setEyeColor(null | string $eyeColor): void
     {
-        $this->eyeColor = $eyeColor ?? trim(string: $eyeColor);
+        if (!is_null($eyeColor)) $this->eyeColor = trim(string: $eyeColor);
     }
 
     public function setBirthYear(null | int | string $birthYear): void
     {
-        $this->birthYear = $birth_year ?? (int) $birthYear;
+        if (!is_null($birthYear)) $this->birthYear = (int) $birthYear;
     }
 
     public function setGender(null | string $gender): void
     {
-        $this->gender = $gender ?? trim(string: $gender);
+        if (!is_null($gender)) $this->gender = trim(string: $gender);
     }
 
     public function setHomeworld(int | string $homeworldId): void
@@ -80,11 +80,11 @@ final class People extends BaseDataObject
 
     public function setCreated(null | string $created): void
     {
-        $this->created = $created ?? new \DateTime(datetime: $created);
+        if (!is_null($created)) $this->created = new \DateTime(datetime: $created);
     }
 
     public function setEdited(null | string $edited): void
     {
-        $this->edited = $edited ?? new \DateTime(datetime: $edited);
+        if (!is_null($edited)) $this->edited = new \DateTime(datetime: $edited);
     }
 }
