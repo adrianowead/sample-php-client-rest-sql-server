@@ -5,7 +5,7 @@
     
     <testsuites>
         <testsuite name="Testes Unitários">
-            <directory>tests/</directory>
+            <directory suffix=".php">./tests/</directory>
         </testsuite>
     </testsuites>
     
@@ -18,6 +18,9 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
+            <exclude>
+                <file>./src/index.php</file>
+            </exclude>
         </whitelist>
     </filter>
 </phpunit>
