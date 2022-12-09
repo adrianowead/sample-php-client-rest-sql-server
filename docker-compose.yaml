@@ -11,6 +11,7 @@ services:
       DB_BASE: master
       DB_USER: sa
       DB_PASS: "SqlServer2019!"
+      XDEBUG_MODE: coverage
     ports:
       - target: 80
         published: 8080

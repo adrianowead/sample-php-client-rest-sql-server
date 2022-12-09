@@ -19,15 +19,16 @@ RUN apt-get update && apt-get install -y \
 RUN add-apt-repository ppa:ondrej/php -y
 
 RUN apt-get update && apt-get install -y \
-    php8.2 \
-    php8.2-curl \
-    php8.2-cli \
-    php8.2-odbc \
-    php8.2-sybase \
-    php8.2-mbstring \
-    php8.2-xml \
-    php8.2-xsl \
-    php8.2-zip
+    php8.1 \
+    php8.1-curl \
+    php8.1-cli \
+    php8.1-odbc \
+    php8.1-sybase \
+    php8.1-mbstring \
+    php8.1-xml \
+    php8.1-xsl \
+    php8.1-zip \
+    php8.1-xdebug
 
 # instalar composer a partir do outro container
 COPY --from=composer:2.3.10 /usr/bin/composer /usr/bin/composer
