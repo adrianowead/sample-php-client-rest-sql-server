@@ -9,7 +9,12 @@ abstract class BaseDataObject
         if (!property_exists(object_or_class: $this, property: $prop)) {
             dump("A propriedade {$prop} não existe");
         } else {
-            $func = "set" . ucfirst(string: strtolower(string: $prop));
+            $prop = strtolower(string: $prop);
+
+            $prop = explode(separator: '_', string: $prop);
+            $prop = array_map(callback: 'ucfirst', array: $prop);
+
+            $func = "set" . ucfirst(string: implode('', $prop));
 
             $this->$func($value);
         }

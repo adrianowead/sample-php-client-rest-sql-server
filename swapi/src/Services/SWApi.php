@@ -8,7 +8,11 @@ final class SWApi
 
     public static function call(string $path, array $params = []): \stdClass
     {
-        $link = sizeof(value: $params) > 0 ? self::$uri . $path . '?' . http_build_query(data: $params) : self::$uri . $path;
+        if (sizeof(value: $params) > 0) {
+            $link = self::$uri . $path . '?' . http_build_query(data: $params);
+        } else {
+            self::$uri . $path;
+        }
 
         dump($link);
 

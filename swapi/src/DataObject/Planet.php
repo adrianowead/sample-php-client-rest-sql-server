@@ -7,13 +7,13 @@ final class Planet extends BaseDataObject
     protected int $id;
     protected string $name;
     protected ?float $diameter;
-    protected ?float $rotation_period;
-    protected ?float $orbital_period;
+    protected ?float $rotationPeriod;
+    protected ?float $orbitalPeriod;
     protected ?string $gravity;
     protected ?int $population;
     protected ?string $climate;
     protected ?string $terrain;
-    protected ?string $surface_water;
+    protected ?string $surfaceWater;
     protected ?\DateTime $created;
     protected ?\DateTime $edited;
 
@@ -32,14 +32,14 @@ final class Planet extends BaseDataObject
         $this->diameter = $diameter ?? (float) $diameter;
     }
 
-    public function setRotation_period(null | int | float | string $rotation_period): void
+    public function setRotationPeriod(null | int | float | string $rotationPeriod): void
     {
-        $this->rotation_period = $rotation_period ?? (float) $rotation_period;
+        $this->rotationPeriod = $rotationPeriod ?? (float) $rotationPeriod;
     }
 
-    public function setOrbital_period(null | int | float | string $orbital_period): void
+    public function setOrbitalPeriod(null | int | float | string $orbitalPeriod): void
     {
-        $this->orbital_period = $orbital_period ?? (float) $orbital_period;
+        $this->orbitalPeriod = $orbitalPeriod ?? (float) $orbitalPeriod;
     }
 
     public function setGravity(null | string $gravity): void
@@ -62,9 +62,9 @@ final class Planet extends BaseDataObject
         $this->terrain = $terrain ?? trim(string: $terrain);
     }
 
-    public function setSurface_water(null | string $surface_water): void
+    public function setSurfaceWater(null | string $surfaceWater): void
     {
-        $this->surface_water = $surface_water ?? trim(string: $surface_water);
+        $this->surfaceWater = $surfaceWater ?? trim(string: $surfaceWater);
     }
 
     public function setCreated(null | string $created): void

@@ -12,10 +12,10 @@ final class People extends BaseDataObject
     protected string $name;
     protected ?float $height;
     protected ?float $mass;
-    protected ?string $hair_color;
-    protected ?string $skin_color;
-    protected ?string $eye_color;
-    protected ?int $birth_year;
+    protected ?string $hairColor;
+    protected ?string $skinColor;
+    protected ?string $eyeColor;
+    protected ?int $birthYear;
     protected ?string $gender;
     protected ?\DateTime $created;
     protected ?\DateTime $edited;
@@ -41,24 +41,24 @@ final class People extends BaseDataObject
         $this->mass = $mass ?? (float) $mass;
     }
 
-    public function setHair_color(null | string $hair_color): void
+    public function setHairColor(null | string $hairColor): void
     {
-        $this->hair_color = $hair_color ?? (float) $hair_color;
+        $this->hairColor = $hairColor ?? (float) $hairColor;
     }
 
-    public function setSkin_color(null | string $skin_color): void
+    public function setSkinColor(null | string $skinColor): void
     {
-        $this->skin_color = $skin_color ?? trim(string: $skin_color);
+        $this->skinColor = $skinColor ?? trim(string: $skinColor);
     }
 
-    public function setEye_color(null | string $eye_color): void
+    public function setEyeColor(null | string $eyeColor): void
     {
-        $this->eye_color = $eye_color ?? trim(string: $eye_color);
+        $this->eyeColor = $eyeColor ?? trim(string: $eyeColor);
     }
 
-    public function setBirth_year(null | int | string $birth_year): void
+    public function setBirthYear(null | int | string $birthYear): void
     {
-        $this->birth_year = $birth_year ?? (int) $birth_year;
+        $this->birthYear = $birth_year ?? (int) $birthYear;
     }
 
     public function setGender(null | string $gender): void

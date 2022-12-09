@@ -68,8 +68,13 @@ abstract class BaseModels
         $list = $object->toArray();
 
         $fields = array_keys(array: $list);
+        $values =  implode(separator: ',:', array: $fields);
 
-        return "INSERT INTO {$this->table} (" . implode(separator: ',', array: $fields) . ") VALUES (:" . implode(separator: ',:', array: $fields) . ")";
+        $fields = implode(separator: ',', array: $fields);
+
+        return <<<SQL
+INSERT INTO {$this->table} ({$fields}) VALUES (:{$values})
+SQL;
     }
 
     public function getFromId(int $id): ?BaseDataObject
