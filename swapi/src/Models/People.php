@@ -15,4 +15,9 @@ final class People extends BaseModels
 
         parent::saveIfNotExists(object: $object);
     }
+
+    protected function dataFromObject(\stdClass $object): DataObjectPeople
+    {
+        return (new DataObjectPeople)->fromObject($object);
+    }
 }

@@ -3,8 +3,6 @@
 namespace SWApi\Models;
 
 use SWApi\DataObject\BaseDataObject;
-use SWApi\DataObject\People;
-use SWApi\DataObject\Planet;
 
 abstract class BaseModels
 {
@@ -77,18 +75,14 @@ INSERT INTO {$this->table} ({$fields}) VALUES (:{$values})
 SQL;
     }
 
-    public function getFromId(int $id): ?BaseDataObject
+    public function getFromId(int $id): BaseDataObject
     {
         $sth = $this->conn->prepare(query: "SELECT * FROM {$this->table} WHERE id = :id");
         $sth->bindParam(param: ':id', var: $id);
         $sth->execute();
 
-        $type = explode('\\', $this::class);
-        $type = strtolower(end($type));
-
-        return match ($type) {
-            'planet' => (new Planet())->fromObject($sth->fetchObject()),
-            'people' => (new People())->fromObject($sth->fetchObject()),
-        };
+        return $this->dataFromObject($sth->fetchObject());
     }
+
+    protected abstract function dataFromObject(\stdClass $object): BaseDataObject;
 }
