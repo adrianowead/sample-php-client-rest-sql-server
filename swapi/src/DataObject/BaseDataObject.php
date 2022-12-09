@@ -2,12 +2,14 @@
 
 namespace SWApi\DataObject;
 
+use SWApi\Exceptions\InvalidPropertyException;
+
 abstract class BaseDataObject
 {
     public function __set($prop, $value)
     {
         if (!property_exists(object_or_class: $this, property: $prop)) {
-            dump("A propriedade {$prop} não existe");
+            throw new InvalidPropertyException("A propriedade {$prop} não existe");
         } else {
             $prop = strtolower(string: $prop);
 
@@ -23,7 +25,7 @@ abstract class BaseDataObject
     public function __get($prop)
     {
         if (!property_exists(object_or_class: $this, property: $prop)) {
-            dump("A propriedade {$prop} não existe");
+            throw new InvalidPropertyException("A propriedade {$prop} não existe");
         } else {
             return $this->$prop;
         }
