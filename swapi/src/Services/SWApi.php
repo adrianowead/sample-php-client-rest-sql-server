@@ -2,7 +2,8 @@
 
 namespace SWApi\Services;
 
-final class SWApi {
+final class SWApi
+{
     protected static string $uri = 'https://www.swapi.tech/api';
 
     public static function call(string $path, array $params = []): \stdClass

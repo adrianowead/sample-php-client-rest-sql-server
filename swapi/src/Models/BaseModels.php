@@ -44,15 +44,15 @@ abstract class BaseModels
 
     public function saveIfNotExists(BaseDataObject $object): void
     {
-        if(!$this->alreadyExistsId(id: $object->id)) {
+        if (!$this->alreadyExistsId(id: $object->id)) {
             $list = $object->toArray();
 
             $sth = $this->conn->prepare(
                 query: $this->buildInsertQuery(object: $object)
             );
 
-            foreach($list as $k => $v) {
-                if($v instanceof BaseDataObject) {
+            foreach ($list as $k => $v) {
+                if ($v instanceof BaseDataObject) {
                     $v = $v->id;
                 }
 
@@ -81,9 +81,9 @@ abstract class BaseModels
         $type = explode('\\', $this::class);
         $type = strtolower(end($type));
 
-        return match($type) {
-            'planet' => (new Planet)->fromObject($sth->fetchObject()),
-            'people' => (new People)->fromObject($sth->fetchObject()),
+        return match ($type) {
+            'planet' => (new Planet())->fromObject($sth->fetchObject()),
+            'people' => (new People())->fromObject($sth->fetchObject()),
         };
     }
 }

@@ -6,8 +6,8 @@ use SWApi\DataObject\Planet as DataObjectPlanet;
 use SWApi\Models\Planet as ModelsPlanet;
 use SWApi\Services\SWApi;
 
-final class Planet extends BaseCommands {
-
+final class Planet extends BaseCommands
+{
     public function __construct()
     {
         $this->endpoint = 'planets';
@@ -17,12 +17,12 @@ final class Planet extends BaseCommands {
     {
         $out = parent::getAll();
 
-        dump("Planetas encontrados (". sizeof($out) . "), buscando detalhes de cada um...");
+        dump("Planetas encontrados (" . sizeof($out) . "), buscando detalhes de cada um...");
 
-        foreach($out as $k => $planet) {
-            $fromDB = (new ModelsPlanet)->getFromId(id: (int) $planet->uid);
+        foreach ($out as $k => $planet) {
+            $fromDB = (new ModelsPlanet())->getFromId(id: (int) $planet->uid);
 
-            if(!empty($fromDB)) {
+            if (!empty($fromDB)) {
                 $out[$k] = $fromDB;
             } else {
                 $out[$k] = $this->getFromId(
@@ -41,6 +41,6 @@ final class Planet extends BaseCommands {
 
         unset($data->result->properties->url);
 
-        return (new DataObjectPlanet)->fromObject(object: $data->result->properties);
+        return (new DataObjectPlanet())->fromObject(object: $data->result->properties);
     }
 }

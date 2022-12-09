@@ -68,14 +68,14 @@ final class People extends BaseDataObject
 
     public function setHomeworld(int | string $homeworldId): void
     {
-        $fromDB = (new ModelsPlanet)->getFromId(id: (int) $homeworldId);
+        $fromDB = (new ModelsPlanet())->getFromId(id: (int) $homeworldId);
 
-        if(!empty($fromDB)) {
+        if (!empty($fromDB)) {
             $this->homeworld = $fromDB;
             return ;
         }
-    
-        $this->homeworld = (new Planet)->getFromId(id: (int) $homeworldId);
+
+        $this->homeworld = (new Planet())->getFromId(id: (int) $homeworldId);
     }
 
     public function setCreated(null | string $created): void

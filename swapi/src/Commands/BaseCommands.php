@@ -5,7 +5,8 @@ namespace SWApi\Commands;
 use SWApi\DataObject\BaseDataObject;
 use SWApi\Services\SWApi;
 
-abstract class BaseCommands {
+abstract class BaseCommands
+{
     protected string $signature;
     protected string $enpoint;
 
@@ -13,7 +14,7 @@ abstract class BaseCommands {
     {
         $func  = "get" . ucfirst(string: $prop);
 
-        if(method_exists(object_or_class: $this, method: $func)) {
+        if (method_exists(object_or_class: $this, method: $func)) {
             return $this->$func();
         }
 
@@ -28,17 +29,18 @@ abstract class BaseCommands {
         do {
             dump("Buscando /{$this->endpoint} página {$currentPage}");
 
-            $data = SWApi::call(path: "/{$this->endpoint}",
-            params: [
+            $data = SWApi::call(
+                path: "/{$this->endpoint}",
+                params: [
                 'page' => $currentPage,
                 'limit' => 10
-            ]);
+                ]
+            );
 
             $out = array_merge($out, $data->results);
 
             $currentPage++;
-        }
-        while(!empty($data->next));
+        } while (!empty($data->next));
 
         return $out;
     }

@@ -6,8 +6,8 @@ use SWApi\DataObject\People as DataObjectPeople;
 use SWApi\Models\People as ModelsPeople;
 use SWApi\Services\SWApi;
 
-final class People extends BaseCommands {
-
+final class People extends BaseCommands
+{
     public function __construct()
     {
         $this->endpoint = 'people';
@@ -17,12 +17,12 @@ final class People extends BaseCommands {
     {
         $out = parent::getAll();
 
-        dump("Pessoas encontradas (". sizeof($out) . "), buscando detalhes de cada um...");
+        dump("Pessoas encontradas (" . sizeof($out) . "), buscando detalhes de cada um...");
 
-        foreach($out as $k => $people) {
-            $fromDB = (new ModelsPeople)->getFromId(id: (int) $people->uid);
+        foreach ($out as $k => $people) {
+            $fromDB = (new ModelsPeople())->getFromId(id: (int) $people->uid);
 
-            if(!empty($fromDB)) {
+            if (!empty($fromDB)) {
                 $out[$k] = $fromDB;
             } else {
                 $out[$k] = $this->getFromId(
@@ -46,6 +46,6 @@ final class People extends BaseCommands {
 
         unset($data->result->properties->url);
 
-        return (new DataObjectPeople)->fromObject(object: $data->result->properties);
+        return (new DataObjectPeople())->fromObject(object: $data->result->properties);
     }
 }

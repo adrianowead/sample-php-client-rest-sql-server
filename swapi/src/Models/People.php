@@ -11,7 +11,7 @@ final class People extends BaseModels
 
     public function saveIfNotExists(BaseDataObject $object): void
     {
-        (new Planet)->saveIfNotExists(object: $object->homeworld);
+        (new Planet())->saveIfNotExists(object: $object->homeworld);
 
         parent::saveIfNotExists(object: $object);
     }

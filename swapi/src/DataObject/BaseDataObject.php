@@ -58,8 +58,8 @@ abstract class BaseDataObject
     {
         $data = get_object_vars(object: $this);
 
-        foreach($data as $k => $v) {
-            if($v instanceof \DateTime) {
+        foreach ($data as $k => $v) {
+            if ($v instanceof \DateTime) {
                 $data[$k] = $v->format(format: 'Y-m-d H:i:s');
             }
         }
