@@ -20,4 +20,7 @@
   <logging>
     <testdoxText outputFile="tests/_reports/testdox/executed.txt"/>
   </logging>
+  <php>
+    <env name="STAR_WARS_API_URI" value="/work/tests/Mock/SWapi" />
+  </php>
 </phpunit>

@@ -37,7 +37,6 @@ final class SWApiTest extends TestCase
 
     public function testCall(): void
     {
-        /** @todo This test is incomplete. */
-        $this->markTestIncomplete();
+        $this->assertIsObject($this->sWApi->call('/api.json', ['q' => 1]));
     }
 }
