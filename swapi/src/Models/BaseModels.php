@@ -75,13 +75,19 @@ INSERT INTO {$this->table} ({$fields}) VALUES (:{$values})
 SQL;
     }
 
-    public function getFromId(int $id): BaseDataObject
+    public function getFromId(int $id): ?BaseDataObject
     {
         $sth = $this->conn->prepare(query: "SELECT * FROM {$this->table} WHERE id = :id");
         $sth->bindParam(param: ':id', var: $id);
         $sth->execute();
 
-        return $this->dataFromObject($sth->fetchObject());
+        $obj = $sth->fetchObject();
+
+        if($obj instanceof \stdClass) {
+            return $this->dataFromObject($obj);
+        }
+
+        return null;
     }
 
     protected abstract function dataFromObject(\stdClass $object): BaseDataObject;
