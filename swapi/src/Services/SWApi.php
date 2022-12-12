@@ -2,6 +2,8 @@
 
 namespace SWApi\Services;
 
+use SWApi\Exceptions\UnreachableApiException;
+
 final class SWApi
 {
     public static function call(string $path, array $params = []): \stdClass
@@ -14,7 +16,11 @@ final class SWApi
 
         dump($link);
 
-        $data = file_get_contents(filename: $link);
+        try {
+            $data = file_get_contents(filename: $link);
+        } catch (\Exception $e) {
+            throw new UnreachableApiException("API ({$link}) inacessível");
+        }
 
         return json_decode(json: $data);
     }
