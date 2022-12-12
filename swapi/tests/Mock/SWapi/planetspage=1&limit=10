@@ -1,0 +1,14 @@
+{
+    "message": "ok",
+    "total_records": 1,
+    "total_pages": 1,
+    "previous": null,
+    "next": null,
+    "results": [
+        {
+            "uid": "1",
+            "name": "Tatooine",
+            "url": "https://www.swapi.tech/api/planets/1"
+        }
+    ]
+}
