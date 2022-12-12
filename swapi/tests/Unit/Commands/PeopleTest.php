@@ -5,6 +5,7 @@ namespace Tests\Unit\Commands;
 use PHPUnit\Framework\TestCase;
 use SWApi\Commands\People;
 use SWApi\DataObject\People as DataObjectPeople;
+use SWApi\Exceptions\UnreachableApiException;
 
 /**
  * Class PeopleTest.
@@ -37,9 +38,9 @@ final class PeopleTest extends TestCase
 
     public function testGetAll(): void
     {
-        $list = $this->people->getAll();
+        $this->expectException(UnreachableApiException::class);
 
-        $this->assertInstanceOf(DataObjectPeople::class, current($list));
+        $this->people->getAll();
     }
 
     public function testGetFromId(): void
