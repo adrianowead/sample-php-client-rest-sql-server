@@ -81,17 +81,17 @@ final class BaseDataObjectTest extends TestCase
     public function testFromJson(): void
     {
         $people = new People;
-        $people->fromJson(json: '{"id":1,"name":"test"}');
+        $people->fromJson(json: '{"id":1,"name":"test","hair_color":"test"}');
 
-        $this->assertEquals(1, $people->id);
+        $this->assertEquals('test', $people->hairColor);
     }
 
     public function testFromObject(): void
     {
         $people = new People;
-        $people->fromObject(object: json_decode('{"id":1,"name":"test"}'));
+        $people->fromObject(object: json_decode('{"id":1,"name":"test","hairColor":"test"}'));
 
-        $this->assertEquals(1, $people->id);
+        $this->assertEquals('test', $people->hairColor);
     }
 
     public function test__toString(): void

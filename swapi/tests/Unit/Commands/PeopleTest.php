@@ -4,6 +4,7 @@ namespace Tests\Unit\Commands;
 
 use PHPUnit\Framework\TestCase;
 use SWApi\Commands\People;
+use SWApi\DataObject\People as DataObjectPeople;
 
 /**
  * Class PeopleTest.
@@ -36,8 +37,9 @@ final class PeopleTest extends TestCase
 
     public function testGetAll(): void
     {
-        /** @todo This test is incomplete. */
-        $this->markTestIncomplete();
+        $list = $this->people->getAll();
+
+        $this->assertInstanceOf(DataObjectPeople::class, current($list));
     }
 
     public function testGetFromId(): void
