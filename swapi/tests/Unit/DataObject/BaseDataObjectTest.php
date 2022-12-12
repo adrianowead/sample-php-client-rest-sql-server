@@ -60,31 +60,56 @@ final class BaseDataObjectTest extends TestCase
 
     public function test__get(): void
     {
-        /** @todo This test is incomplete. */
-        $this->markTestIncomplete();
+        $people = new People;
+        $people->id = 1;
+        $people->name = 'test';
+
+        $this->assertEquals(1, $people->id);
+    }
+
+    public function test__getNotExists(): void
+    {
+        $this->expectException(InvalidPropertyException::class);
+
+        $people = new People;
+        $people->id = 1;
+        $people->name = 'test';
+
+        $people->notExistsTest;
     }
 
     public function testFromJson(): void
     {
-        /** @todo This test is incomplete. */
-        $this->markTestIncomplete();
+        $people = new People;
+        $people->fromJson(json: '{"id":1,"name":"test"}');
+
+        $this->assertEquals(1, $people->id);
     }
 
     public function testFromObject(): void
     {
-        /** @todo This test is incomplete. */
-        $this->markTestIncomplete();
+        $people = new People;
+        $people->fromObject(object: json_decode('{"id":1,"name":"test"}'));
+
+        $this->assertEquals(1, $people->id);
     }
 
     public function test__toString(): void
     {
-        /** @todo This test is incomplete. */
-        $this->markTestIncomplete();
+        $people = new People;
+        $people->id = 1;
+        $people->name = 'test';
+
+        $this->assertEquals($people->id, json_decode(json: (string) $people)->id);
     }
 
     public function testToArray(): void
     {
-        /** @todo This test is incomplete. */
-        $this->markTestIncomplete();
+        $people = new People;
+        $people->id = 1;
+        $people->name = 'test';
+        $people->created = '1987-10-08 05:00:00';
+
+        $this->assertArrayHasKey('id', $people->toArray());
     }
 }
