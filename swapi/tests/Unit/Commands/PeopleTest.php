@@ -44,7 +44,8 @@ final class PeopleTest extends TestCase
 
     public function testGetFromId(): void
     {
-        /** @todo This test is incomplete. */
-        $this->markTestIncomplete();
+        $people = $this->people->getFromId(id: 1);
+
+        $this->assertInstanceOf(DataObjectPeople::class, $people);
     }
 }
