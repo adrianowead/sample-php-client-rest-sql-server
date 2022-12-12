@@ -43,7 +43,7 @@ final class People extends BaseDataObject
 
     public function setHairColor(null | string $hairColor): void
     {
-        if(!is_null($hairColor)) $this->hairColor = (float) $hairColor;
+        if(!is_null($hairColor)) $this->hairColor = $hairColor;
     }
 
     public function setSkinColor(null | string $skinColor): void
