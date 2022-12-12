@@ -4,6 +4,7 @@ namespace Tests\Unit\Commands;
 
 use PHPUnit\Framework\TestCase;
 use SWApi\Commands\Planet;
+use SWApi\DataObject\Planet as DataObjectPlanet;
 
 /**
  * Class PlanetTest.
@@ -36,13 +37,15 @@ final class PlanetTest extends TestCase
 
     public function testGetAll(): void
     {
-        /** @todo This test is incomplete. */
-        $this->markTestIncomplete();
+        $list = $this->planet->getAll();
+
+        $this->assertInstanceOf(DataObjectPlanet::class, current($list));
     }
 
     public function testGetFromId(): void
     {
-        /** @todo This test is incomplete. */
-        $this->markTestIncomplete();
+        $planet = $this->planet->getFromId(id: 1);
+
+        $this->assertInstanceOf(DataObjectPlanet::class, $planet);
     }
 }
