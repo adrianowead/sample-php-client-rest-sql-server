@@ -7,19 +7,7 @@ use SWApi\Services\SWApi;
 
 abstract class BaseCommands
 {
-    protected string $signature;
     protected string $enpoint;
-
-    public function __get(string $prop): mixed
-    {
-        $func  = "get" . ucfirst(string: $prop);
-
-        if (method_exists(object_or_class: $this, method: $func)) {
-            return $this->$func();
-        }
-
-        throw new \Exception(message: "A função '{$func}' não existe.", code: 1);
-    }
 
     public function getAll(): array
     {
