@@ -4,14 +4,12 @@ namespace SWApi\Services;
 
 final class SWApi
 {
-    protected static string $uri = 'https://www.swapi.tech/api';
-
     public static function call(string $path, array $params = []): \stdClass
-    {
+    {  
+        $link = getenv('STAR_WARS_API_URI') . $path;
+
         if (sizeof(value: $params) > 0) {
-            $link = self::$uri . $path . '?' . http_build_query(data: $params);
-        } else {
-            self::$uri . $path;
+            $link .= '?' . http_build_query(data: $params);
         }
 
         dump($link);
