@@ -11,12 +11,7 @@ abstract class BaseDataObject
         if (!property_exists(object_or_class: $this, property: $prop)) {
             throw new InvalidPropertyException("A propriedade {$prop} não existe");
         } else {
-            $prop = strtolower(string: $prop);
-
-            $prop = explode(separator: '_', string: $prop);
-            $prop = array_map(callback: 'ucfirst', array: $prop);
-
-            $func = "set" . ucfirst(string: implode('', $prop));
+            $func = "set" . ucfirst($prop);
 
             $this->$func($value);
         }
@@ -39,7 +34,10 @@ abstract class BaseDataObject
         $obj = @json_decode(json: $json, associative: true);
 
         foreach ($obj as $prop => $value) {
-            $this->__set(prop: $prop, value: $value);
+            $this->__set(
+                prop: $this->normalizeProp(prop: $prop),
+                value: $value
+            );
         }
 
         return $this;
@@ -48,7 +46,10 @@ abstract class BaseDataObject
     public function fromObject(\stdClass $object): BaseDataObject
     {
         foreach ($object as $prop => $value) {
-            $this->__set(prop: $prop, value: $value);
+            $this->__set(
+                prop: $this->normalizeProp(prop: $prop),
+                value: $value
+            );
         }
 
         return $this;
@@ -59,6 +60,22 @@ abstract class BaseDataObject
         $array = $this->toArray();
 
         return json_encode(value: $array);
+    }
+
+    protected function normalizeProp(string $prop): string
+    {
+        if(substr_count($prop, '_') > 0) {
+            $prop = strtolower(string: $prop);
+
+            $prop = explode(separator: '_', string: $prop);
+            $prop = array_map(callback: 'ucfirst', array: $prop);
+
+            $prop = implode('', $prop);
+        }
+
+        $prop = lcfirst(string: $prop);
+
+        return $prop;
     }
 
     public function toArray(): array
