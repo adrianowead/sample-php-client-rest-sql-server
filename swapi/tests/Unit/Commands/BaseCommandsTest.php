@@ -4,6 +4,10 @@ namespace Tests\Unit\Commands;
 
 use PHPUnit\Framework\TestCase;
 use SWApi\Commands\BaseCommands;
+use SWApi\Commands\People;
+use SWApi\Commands\Planet;
+use SWApi\DataObject\Planet as DataObjectPlanet;
+use SWApi\Exceptions\UnreachableApiException;
 
 /**
  * Class BaseCommandsTest.
@@ -37,21 +41,24 @@ final class BaseCommandsTest extends TestCase
         unset($this->baseCommands);
     }
 
-    public function test__get(): void
-    {
-        /** @todo This test is incomplete. */
-        $this->markTestIncomplete();
-    }
-
     public function testGetAll(): void
     {
-        /** @todo This test is incomplete. */
-        $this->markTestIncomplete();
+        $list = (new Planet)->getAll();
+
+        $this->assertInstanceOf(DataObjectPlanet::class, current($list));
     }
 
     public function testGetFromId(): void
     {
-        /** @todo This test is incomplete. */
-        $this->markTestIncomplete();
+        $planet = (new Planet)->getFromId(id: 1);
+
+        $this->assertInstanceOf(DataObjectPlanet::class, $planet);
+    }
+
+    public function testGetFromIvalidId(): void
+    {
+        $this->expectException(UnreachableApiException::class);
+
+        (new People)->getFromId(id: 99);
     }
 }
