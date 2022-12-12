@@ -9,6 +9,11 @@
             "uid": "1",
             "name": "Tatooine",
             "url": "https://www.swapi.tech/api/planets/1"
+        },
+        {
+            "uid": "2",
+            "name": "Alderaan",
+            "url": "https://www.swapi.tech/api/planets/2"
         }
     ]
 }
