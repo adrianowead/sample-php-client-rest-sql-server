@@ -31,13 +31,27 @@ final class PeopleTest extends TestCase
         parent::tearDown();
     }
 
-    public function testGetAll(): void
+    public function testUnreachableException(): void
     {
         $this->expectException(UnreachableApiException::class);
 
         $people = new People(client: MockApi::client([404], [null]));
 
         $people->getAll();
+    }
+
+    public function testGetAll(): void
+    {
+        $people = new People(client: MockApi::client(
+            status: [200, 200, 200],
+            body: [
+                file_get_contents(__DIR__.'/../../Mock/SWapi/people-all.json'),
+                file_get_contents(__DIR__.'/../../Mock/SWapi/people-1.json'),
+                file_get_contents(__DIR__.'/../../Mock/SWapi/people-2.json'),
+            ]
+        ));
+
+        $this->assertInstanceOf(DataObjectPeople::class, current($people->getAll()));
     }
 
     public function testGetFromId(): void
