@@ -2,14 +2,16 @@
 
 namespace SWApi\Commands;
 
+use GuzzleHttp\Client;
 use SWApi\DataObject\Planet as DataObjectPlanet;
 use SWApi\Models\Planet as ModelsPlanet;
-use SWApi\Services\SWApi;
 
 final class Planet extends BaseCommands
 {
-    public function __construct()
+    public function __construct(?Client $client = null)
     {
+        parent::__construct($client);
+
         $this->endpoint = 'planets';
     }
 
@@ -36,7 +38,7 @@ final class Planet extends BaseCommands
 
     public function getFromId(int $id): DataObjectPlanet
     {
-        $data = SWApi::call(path: "/{$this->endpoint}/{$id}");
+        $data = $this->swApi::call(path: "/{$this->endpoint}/{$id}");
         $data->result->properties->id = $id;
 
         unset($data->result->properties->url);

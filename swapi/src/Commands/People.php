@@ -2,14 +2,16 @@
 
 namespace SWApi\Commands;
 
+use GuzzleHttp\Client;
 use SWApi\DataObject\People as DataObjectPeople;
 use SWApi\Models\People as ModelsPeople;
-use SWApi\Services\SWApi;
 
 final class People extends BaseCommands
 {
-    public function __construct()
+    public function __construct(?Client $client = null)
     {
+        parent::__construct($client);
+
         $this->endpoint = 'people';
     }
 
@@ -36,7 +38,7 @@ final class People extends BaseCommands
 
     public function getFromId(int $id): DataObjectPeople
     {
-        $data = SWApi::call(path: "/{$this->endpoint}/{$id}");
+        $data = $this->swApi::call(path: "/{$this->endpoint}/{$id}");
         $data->result->properties->id = $id;
         $data->result->properties->homeworld = preg_replace(
             pattern: '/[^0-9]/',

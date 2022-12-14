@@ -2,12 +2,21 @@
 
 namespace SWApi\Commands;
 
+use GuzzleHttp\Client;
 use SWApi\DataObject\BaseDataObject;
 use SWApi\Services\SWApi;
 
 abstract class BaseCommands
 {
     protected string $enpoint;
+    protected ?Client $client = null;
+    protected SWApi $swApi;
+
+    public function __construct(?Client $client = null)
+    {
+        $this->client = $client;
+        $this->swApi = new SWApi(client: $client);
+    }
 
     public function getAll(): array
     {
@@ -17,11 +26,11 @@ abstract class BaseCommands
         do {
             dump("Buscando /{$this->endpoint} página {$currentPage}");
 
-            $data = SWApi::call(
+            $data = $this->swApi::call(
                 path: "/{$this->endpoint}",
                 params: [
-                'page' => $currentPage,
-                'limit' => 10
+                    'page' => $currentPage,
+                    'limit' => 10
                 ]
             );
 
