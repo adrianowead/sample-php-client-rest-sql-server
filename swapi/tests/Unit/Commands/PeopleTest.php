@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use SWApi\Commands\People;
 use SWApi\DataObject\People as DataObjectPeople;
 use SWApi\Exceptions\UnreachableApiException;
+use Tests\Mock\SWapi\MockApi;
 
 /**
  * Class PeopleTest.
@@ -14,16 +15,12 @@ use SWApi\Exceptions\UnreachableApiException;
  */
 final class PeopleTest extends TestCase
 {
-    private People $people;
-
     /**
      * {@inheritdoc}
      */
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->people = new People();
     }
 
     /**
@@ -32,21 +29,24 @@ final class PeopleTest extends TestCase
     protected function tearDown(): void
     {
         parent::tearDown();
-
-        unset($this->people);
     }
 
     public function testGetAll(): void
     {
         $this->expectException(UnreachableApiException::class);
 
-        $this->people->getAll();
+        $people = new People(client: MockApi::client([404], [null]));
+
+        $people->getAll();
     }
 
     public function testGetFromId(): void
     {
-        $people = $this->people->getFromId(id: 1);
+        $people = new People(client: MockApi::client(
+            status: [200],
+            body: [file_get_contents(__DIR__.'/../../Mock/SWapi/people-1.json')]
+        ));
 
-        $this->assertInstanceOf(DataObjectPeople::class, $people);
+        $this->assertInstanceOf(DataObjectPeople::class, $people->getFromId(id: 1));
     }
 }

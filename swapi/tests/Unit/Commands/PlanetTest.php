@@ -5,6 +5,7 @@ namespace Tests\Unit\Commands;
 use PHPUnit\Framework\TestCase;
 use SWApi\Commands\Planet;
 use SWApi\DataObject\Planet as DataObjectPlanet;
+use Tests\Mock\SWapi\MockApi;
 
 /**
  * Class PlanetTest.
@@ -13,16 +14,12 @@ use SWApi\DataObject\Planet as DataObjectPlanet;
  */
 final class PlanetTest extends TestCase
 {
-    private Planet $planet;
-
     /**
      * {@inheritdoc}
      */
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->planet = new Planet();
     }
 
     /**
@@ -31,21 +28,31 @@ final class PlanetTest extends TestCase
     protected function tearDown(): void
     {
         parent::tearDown();
-
-        unset($this->planet);
     }
 
     public function testGetAll(): void
     {
-        $list = $this->planet->getAll();
+        $planet = new Planet(client: MockApi::client(
+            status: [200, 200, 200],
+            body: [
+                file_get_contents(__DIR__.'/../../Mock/SWapi/planets-all.json'),
+                file_get_contents(__DIR__.'/../../Mock/SWapi/planet-1.json'),
+                file_get_contents(__DIR__.'/../../Mock/SWapi/planet-2.json'),
+            ]
+        ));
 
-        $this->assertInstanceOf(DataObjectPlanet::class, current($list));
+        $this->assertInstanceOf(DataObjectPlanet::class, current($planet->getAll()));
     }
 
     public function testGetFromId(): void
     {
-        $planet = $this->planet->getFromId(id: 1);
+        $planet = new Planet(client: MockApi::client(
+            status: [200],
+            body: [
+                file_get_contents(__DIR__.'/../../Mock/SWapi/planet-1.json')
+            ]
+        ));
 
-        $this->assertInstanceOf(DataObjectPlanet::class, $planet);
+        $this->assertInstanceOf(DataObjectPlanet::class, $planet->getFromId(id: 1));
     }
 }
