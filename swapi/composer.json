@@ -20,12 +20,13 @@
         }
     },
     "require-dev": {
-        "symfony/var-dumper": "^6.2",
         "squizlabs/php_codesniffer": "^3.7",
-        "phan/phan": "^5.4",
         "phpunit/phpunit": "^9.5",
+        "mockery/mockery": "^1.5",
+        "phan/phan": "^5.4",
         "phpunitgen/console": "^4.1",
-        "mockery/mockery": "^1.5"
+        "symfony/var-dumper": "^6.2",
+        "guzzlehttp/guzzle": "^7.5"
     },
     "scripts": {
         "psr12": "phpcs --standard=PSR12 --colors src/",
