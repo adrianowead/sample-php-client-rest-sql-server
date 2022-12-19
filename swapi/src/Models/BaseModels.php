@@ -6,9 +6,9 @@ use SWApi\DataObject\BaseDataObject;
 
 abstract class BaseModels
 {
-    protected $conn;
+    protected \PDO $conn;
 
-    public function __construct()
+    public function __construct(\PDO $pdo = null)
     {
         $host = getenv(name: 'DB_HOST');
         $port = getenv(name: 'DB_PORT');
@@ -16,25 +16,29 @@ abstract class BaseModels
         $pass = getenv(name: 'DB_PASS');
         $base = getenv(name: 'DB_BASE');
 
-        $this->conn = new \PDO(
-            dsn: "dblib:host={$host}:{$port};dbname={$base}",
-            username: $user,
-            password: $pass
-        );
+       if(!empty($pdo)) {
+            $this->conn = $pdo;
+       } else {
+            $this->conn = new \PDO(
+                dsn: "dblib:host={$host}:{$port};dbname={$base}",
+                username: $user,
+                password: $pass
+            );
+       }
     }
 
     public function count(): int
     {
         $sql = "SELECT COUNT(*) AS TOTAL FROM {$this->table}";
-        $res = $this->conn->query(statement: $sql);
+        $res = $this->conn->query($sql);
 
         return $res->fetchObject()->TOTAL;
     }
 
     public function alreadyExistsId(int $id): bool
     {
-        $sth = $this->conn->prepare(query: "SELECT COUNT(*) AS TOTAL FROM {$this->table} WHERE id = :id");
-        $sth->bindParam(param: ':id', var: $id);
+        $sth = $this->conn->prepare("SELECT COUNT(*) AS TOTAL FROM {$this->table} WHERE id = :id");
+        $sth->bindParam(':id', $id);
         $sth->execute();
 
         return $sth->fetchObject()->TOTAL > 0;
@@ -46,7 +50,7 @@ abstract class BaseModels
             $list = $object->toArray();
 
             $sth = $this->conn->prepare(
-                query: $this->buildInsertQuery(object: $object)
+                $this->buildInsertQuery($object)
             );
 
             foreach ($list as $k => $v) {
@@ -54,7 +58,7 @@ abstract class BaseModels
                     $v = $v->id;
                 }
 
-                $sth->bindValue(param: ":{$k}", value: $v);
+                $sth->bindValue(":{$k}", $v);
             }
 
             $sth->execute();
